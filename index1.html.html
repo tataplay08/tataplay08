@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pH Graph</title>
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<h1>pH Graph</h1>
+
+<!-- Canvas to render the chart -->
+<canvas id="phChart" width="400" height="200"></canvas>
+
+<script>
+    // Function to fetch data from Google Drive CSV link
+    async function fetchData() {
+        const response = await fetch('YOUR_GOOGLE_DRIVE_CSV_LINK');
+        const csvData = await response.text();
+        const rows = csvData.split('\n').map(row => row.split(','));
+
+        // Extracting time and pH values from CSV data
+        const labels = rows.slice(1).map(row => row[0]);
+        const data = rows.slice(1).map(row => parseFloat(row[1]));
+
+        // Update chart with fetched data
+        myChart.data.labels = labels;
+        myChart.data.datasets[0].data = data;
+        myChart.update();
+    }
+
+    // Chart configuration
+    var ctx = document.getElementById('phChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'pH Level',
+                data: [],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Fetch data when the page loads
+    fetchData();
+</script>
+
+</body>
+</html>
