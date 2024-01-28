@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>pH Graph</title>
+    <title>pH Graph in day 1</title>
     <!-- Include Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -46,11 +46,26 @@
     // pH data
     var phData = {
         datasets: [{
-            label: 'pH Level',
+            label: 'Morning',
             data: generateRandomPhValues(5, 6.0, 8.0),
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1
+            borderWidth: 1,
+            order: 0,
+        }, {
+            label: 'Afternoon',
+            data: generateRandomPhValues(5, 6.0, 8.0),
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+            order: 1,
+        }, {
+            label: 'Evening',
+            data: generateRandomPhValues(5, 6.0, 8.0),
+            backgroundColor: 'rgba(255, 206, 86, 0.2)',
+            borderColor: 'rgba(255, 206, 86, 1)',
+            borderWidth: 1,
+            order: 2,
         }]
     };
 
@@ -63,7 +78,7 @@
             scales: {
                 x: {
                     type: 'category',
-                    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'],
+                    labels: ['1', '2', '3', '4', '5'],
                     beginAtZero: true,
                     title: {
                         display: true,
