@@ -34,17 +34,20 @@
 <canvas id="phChart" width="400" height="200"></canvas>
 
 <script>
+    // Function to generate random pH values
+    function generateRandomPhValues(numValues, min, max) {
+        var randomPhValues = [];
+        for (var i = 0; i < numValues; i++) {
+            randomPhValues.push((Math.random() * (max - min) + min).toFixed(1));
+        }
+        return randomPhValues;
+    }
+
     // pH data
     var phData = {
         datasets: [{
             label: 'pH Level',
-            data: [
-                { x: 'Day 1 - Morning', y: 6.0 },
-                { x: 'Day 1 - Afternoon', y: 7.2 },
-                { x: 'Day 1 - Evening', y: 8.0 },
-                { x: 'Day 2 - Morning', y: 7.5 },
-                { x: 'Day 2 - Afternoon', y: 7.1 },
-            ],
+            data: generateRandomPhValues(5, 6.0, 8.0),
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 1
@@ -60,7 +63,7 @@
             scales: {
                 x: {
                     type: 'category',
-                    labels: ['Day 1 - Morning', 'Day 1 - Afternoon', 'Day 1 - Evening', 'Day 2 - Morning', 'Day 2 - Afternoon'],
+                    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'],
                     beginAtZero: true,
                     title: {
                         display: true,
