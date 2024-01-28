@@ -6,6 +6,25 @@
     <title>pH Graph</title>
     <!-- Include Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #phChart {
+            max-width: 80%;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
 
@@ -15,47 +34,52 @@
 <canvas id="phChart" width="400" height="200"></canvas>
 
 <script>
-    // Function to fetch data from Google Drive CSV link
-    async function fetchData() {
-        const response = await fetch('YOUR_GOOGLE_DRIVE_CSV_LINK');
-        const csvData = await response.text();
-        const rows = csvData.split('\n').map(row => row.split(','));
-
-        // Extracting time and pH values from CSV data
-        const labels = rows.slice(1).map(row => row[0]);
-        const data = rows.slice(1).map(row => parseFloat(row[1]));
-
-        // Update chart with fetched data
-        myChart.data.labels = labels;
-        myChart.data.datasets[0].data = data;
-        myChart.update();
+    // Function to generate random pH values
+    function generateRandomPhValues(numValues, min, max) {
+        var randomPhValues = [];
+        for (var i = 0; i < numValues; i++) {
+            randomPhValues.push((Math.random() * (max - min) + min).toFixed(1));
+        }
+        return randomPhValues;
     }
+
+    // pH data
+    var phData = {
+        datasets: [{
+            label: 'pH Level',
+            data: generateRandomPhValues(5, 6.0, 8.0),
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }]
+    };
 
     // Chart configuration
     var ctx = document.getElementById('phChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line',
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'pH Level',
-                data: [],
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
+        data: phData,
         options: {
             scales: {
+                x: {
+                    type: 'category',
+                    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'],
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Time'
+                    }
+                },
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'pH Value'
+                    }
                 }
             }
         }
     });
-
-    // Fetch data when the page loads
-    fetchData();
 </script>
 
 </body>
